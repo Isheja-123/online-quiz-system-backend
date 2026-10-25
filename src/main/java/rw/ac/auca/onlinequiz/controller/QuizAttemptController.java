@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rw.ac.auca.onlinequiz.domain.AttemptStatus;
 import rw.ac.auca.onlinequiz.domain.QuizAttempt;
 import rw.ac.auca.onlinequiz.service.QuizAttemptService;
+
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,5 +68,19 @@ public class QuizAttemptController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/by-status")
+    public ResponseEntity<List<QuizAttempt>> getQuizAttemptsByStatus(@RequestParam AttemptStatus status) {
+        return new ResponseEntity<>(quizAttemptService.findByStatus(status), HttpStatus.OK);
+    }
+
+    @GetMapping("/between")
+    public ResponseEntity<List<QuizAttempt>> getQuizAttemptsBetweenDates(
+            @RequestParam String start,
+            @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return new ResponseEntity<>(quizAttemptService.findBetweenDates(startDate, endDate), HttpStatus.OK);
     }
 }

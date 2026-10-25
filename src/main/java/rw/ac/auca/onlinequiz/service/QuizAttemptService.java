@@ -2,9 +2,11 @@ package rw.ac.auca.onlinequiz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rw.ac.auca.onlinequiz.domain.AttemptStatus;
 import rw.ac.auca.onlinequiz.domain.QuizAttempt;
 import rw.ac.auca.onlinequiz.repository.QuizAttemptRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,5 +57,13 @@ public class QuizAttemptService {
         }
         quizAttemptRepository.deleteById(id);
         return "Quiz attempt deleted successfully";
+    }
+
+    public List<QuizAttempt> findByStatus(AttemptStatus status) {
+        return quizAttemptRepository.findByStatusOrderByAttemptDateAsc(status);
+    }
+
+    public List<QuizAttempt> findBetweenDates(LocalDate start, LocalDate end) {
+        return quizAttemptRepository.findByAttemptDateBetweenOrderByAttemptDateAsc(start, end);
     }
 }
