@@ -4,8 +4,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import rw.ac.auca.onlinequiz.domain.QuizAttempt;
 
+import rw.ac.auca.onlinequiz.domain.AttemptStatus;
+
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface QuizAttemptRepository extends JpaRepository<QuizAttempt, UUID> {
+
+    List<QuizAttempt> findByStatusOrderByAttemptDateAsc(AttemptStatus status);
+
+    List<QuizAttempt> findByAttemptDateBetweenOrderByAttemptDateAsc(LocalDate start, LocalDate end);
 }
