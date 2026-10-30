@@ -1,0 +1,613 @@
+{
+	"info": {
+		"_postman_id": "8b9a1e04-7a31-4c22-b5e8-0f5a9e718321",
+		"name": "Online Quiz System - Midterm Examination (27832)",
+		"description": "Postman Collection for Online Quiz System Backend\nStudent: Umuhire Isheja Delice (ID: 27832)\nCourse: INSY 8322 Web Technology and Internet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "A2 - Save Subject",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Web Technology\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/subjects/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"subjects",
+						"save"
+					]
+				}
+			}
+		},
+		{
+			"name": "A2 - Get All Subjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/subjects/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"subjects",
+						"all"
+					]
+				}
+			}
+		},
+		{
+			"name": "A2 - Save Lab",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"labNumber\": 1,\n  \"name\": \"Software Lab 1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/labs/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"labs",
+						"save"
+					]
+				}
+			}
+		},
+		{
+			"name": "A2 - Get All Labs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/labs/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"labs",
+						"all"
+					]
+				}
+			}
+		},
+		{
+			"name": "A2 - Save Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"Delice\",\n  \"lastName\": \"Isheja\",\n  \"regNumber\": \"27832\",\n  \"email\": \"delice.isheja@auca.ac.rw\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/students/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"students",
+						"save"
+					]
+				}
+			}
+		},
+		{
+			"name": "A2 - Get All Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/students/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"students",
+						"all"
+					]
+				}
+			}
+		},
+		{
+			"name": "B1 - Students by Last Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/students/by-last-name?lastName=isheja",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"students",
+						"by-last-name"
+					],
+					"query": [
+						{
+							"key": "lastName",
+							"value": "isheja"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "B2 - Quiz Attempts by Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/by-status?status=STARTED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"by-status"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "STARTED"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "B3 - Quiz Attempts in Date Range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/between?start=2026-10-01&end=2026-11-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"between"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2026-10-01"
+						},
+						{
+							"key": "end",
+							"value": "2026-11-30"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "C1 - Instructors by Subject",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/instructors/by-subject?name=web",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"instructors",
+						"by-subject"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "web"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "C2 - Free Labs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/labs/free",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"labs",
+						"free"
+					]
+				}
+			}
+		},
+		{
+			"name": "C3 - Unused Subjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/subjects/unused",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"subjects",
+						"unused"
+					]
+				}
+			}
+		},
+		{
+			"name": "C4 - Students of Instructor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/students/of-instructor/00000000-0000-0000-0000-000000000000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"students",
+						"of-instructor",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			}
+		},
+		{
+			"name": "D1 - Safe Saving Quiz Attempt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"attemptDate\": \"2026-11-10\",\n  \"quizTitle\": \"Midterm Exam\",\n  \"score\": 85\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"save"
+					]
+				}
+			}
+		},
+		{
+			"name": "D2 - Update Quiz Attempt Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/00000000-0000-0000-0000-000000000000/status?status=SUBMITTED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"00000000-0000-0000-0000-000000000000",
+						"status"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "SUBMITTED"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "D3 - Add Subject to Instructor",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/instructors/00000000-0000-0000-0000-000000000000/subjects/00000000-0000-0000-0000-000000000000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"instructors",
+						"00000000-0000-0000-0000-000000000000",
+						"subjects",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			}
+		},
+		{
+			"name": "D4 - Move Instructor to Lab",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/instructors/00000000-0000-0000-0000-000000000000/lab?labNumber=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"instructors",
+						"00000000-0000-0000-0000-000000000000",
+						"lab"
+					],
+					"query": [
+						{
+							"key": "labNumber",
+							"value": "4"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "E1 - Write Feedback Note",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"questionTopic\": \"HTML forms\",\n  \"comment\": \"Correct but the method attribute is missing\",\n  \"marksAwarded\": 4\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/feedback-notes/save?quizAttemptId=00000000-0000-0000-0000-000000000000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"feedback-notes",
+						"save"
+					],
+					"query": [
+						{
+							"key": "quizAttemptId",
+							"value": "00000000-0000-0000-0000-000000000000"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "E2 - Feedback Note History of Student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/feedback-notes/student/27832",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"feedback-notes",
+						"student",
+						"27832"
+					]
+				}
+			}
+		},
+		{
+			"name": "E3 - Delete Feedback Note",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/feedback-notes/delete/00000000-0000-0000-0000-000000000000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"feedback-notes",
+						"delete",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			}
+		},
+		{
+			"name": "F1 - Quiz Attempts per Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/stats/by-status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"stats",
+						"by-status"
+					]
+				}
+			}
+		},
+		{
+			"name": "F2 - Cancel Day for Instructor",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/cancel-day?instructorId=00000000-0000-0000-0000-000000000000&date=2026-10-20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"cancel-day"
+					],
+					"query": [
+						{
+							"key": "instructorId",
+							"value": "00000000-0000-0000-0000-000000000000"
+						},
+						{
+							"key": "date",
+							"value": "2026-10-20"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Bonus 1 - Dashboard Summary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/dashboard/summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"dashboard",
+						"summary"
+					]
+				}
+			}
+		},
+		{
+			"name": "Bonus 2 - Quiz Attempts Page by Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/quiz-attempts/page?page=0&size=5&sort=attemptDate,desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"quiz-attempts",
+						"page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "attemptDate,desc"
+						}
+					]
+				}
+			}
+		}
+	]
+}
