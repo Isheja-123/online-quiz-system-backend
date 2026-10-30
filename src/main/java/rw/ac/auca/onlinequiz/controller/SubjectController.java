@@ -65,4 +65,9 @@ public class SubjectController {
         }
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/unused")
+    public ResponseEntity<List<Subject>> getUnusedSubjects() {
+        return new ResponseEntity<>(subjectService.findUnusedSubjects(), HttpStatus.OK);
+    }
 }

@@ -65,4 +65,9 @@ public class LabController {
         }
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/free")
+    public ResponseEntity<List<Lab>> getFreeLabs() {
+        return new ResponseEntity<>(labService.findFreeLabs(), HttpStatus.OK);
+    }
 }

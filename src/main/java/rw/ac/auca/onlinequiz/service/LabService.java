@@ -48,4 +48,8 @@ public class LabService {
         labRepository.deleteById(id);
         return "Lab deleted successfully";
     }
+
+    public List<Lab> findFreeLabs() {
+        return labRepository.findFreeLabs();
+    }
 }

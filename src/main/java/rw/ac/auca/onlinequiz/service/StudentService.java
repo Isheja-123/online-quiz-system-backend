@@ -3,6 +3,7 @@ package rw.ac.auca.onlinequiz.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rw.ac.auca.onlinequiz.domain.Student;
+import rw.ac.auca.onlinequiz.repository.InstructorRepository;
 import rw.ac.auca.onlinequiz.repository.StudentRepository;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private InstructorRepository instructorRepository;
 
     public String saveStudent(Student student) {
         studentRepository.save(student);
@@ -53,5 +57,13 @@ public class StudentService {
 
     public List<Student> findByLastName(String lastName) {
         return studentRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public boolean instructorExists(UUID instructorId) {
+        return instructorRepository.existsById(instructorId);
+    }
+
+    public List<Student> findStudentsOfInstructor(UUID instructorId) {
+        return studentRepository.findStudentsOfInstructor(instructorId);
     }
 }

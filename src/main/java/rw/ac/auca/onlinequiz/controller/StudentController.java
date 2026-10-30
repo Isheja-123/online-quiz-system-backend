@@ -71,4 +71,12 @@ public class StudentController {
     public ResponseEntity<List<Student>> getStudentsByLastName(@RequestParam String lastName) {
         return new ResponseEntity<>(studentService.findByLastName(lastName), HttpStatus.OK);
     }
+
+    @GetMapping("/of-instructor/{instructorId}")
+    public ResponseEntity<?> getStudentsOfInstructor(@PathVariable UUID instructorId) {
+        if (!studentService.instructorExists(instructorId)) {
+            return new ResponseEntity<>("The instructor with that id does not exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(studentService.findStudentsOfInstructor(instructorId), HttpStatus.OK);
+    }
 }
