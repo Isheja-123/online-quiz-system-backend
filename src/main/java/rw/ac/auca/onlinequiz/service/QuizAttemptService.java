@@ -18,6 +18,20 @@ public class QuizAttemptService {
     private QuizAttemptRepository quizAttemptRepository;
 
     public String saveQuizAttempt(QuizAttempt quizAttempt) {
+        if (quizAttempt.getAttemptDate() != null && quizAttempt.getAttemptDate().isBefore(LocalDate.now())) {
+            return "Quiz attempt date cannot be in the past";
+        }
+        if (quizAttempt.getInstructor() != null && quizAttempt.getAttemptDate() != null) {
+            boolean conflict = quizAttemptRepository.existsByInstructorAndAttemptDateAndStatusNot(
+                    quizAttempt.getInstructor(),
+                    quizAttempt.getAttemptDate(),
+                    AttemptStatus.ABANDONED
+            );
+            if (conflict) {
+                return "Instructor already has a quiz attempt on that date";
+            }
+        }
+        quizAttempt.setStatus(AttemptStatus.STARTED);
         quizAttemptRepository.save(quizAttempt);
         return "Quiz attempt saved successfully";
     }
@@ -37,7 +51,6 @@ public class QuizAttemptService {
         }
         QuizAttempt existing = existingOptional.get();
         existing.setAttemptDate(quizAttempt.getAttemptDate());
-        existing.setStatus(quizAttempt.getStatus());
         existing.setQuizTitle(quizAttempt.getQuizTitle());
         existing.setScore(quizAttempt.getScore());
         if (quizAttempt.getStudent() != null) {
@@ -48,6 +61,34 @@ public class QuizAttemptService {
         }
         quizAttemptRepository.save(existing);
         return "Quiz attempt updated successfully";
+    }
+
+    public String updateStatus(UUID id, AttemptStatus newStatus) {
+        Optional<QuizAttempt> existingOptional = quizAttemptRepository.findById(id);
+        if (existingOptional.isEmpty()) {
+            return "The quiz attempt with that id does not exist";
+        }
+        QuizAttempt existing = existingOptional.get();
+        AttemptStatus current = existing.getStatus();
+
+        boolean allowed = false;
+        if (current == AttemptStatus.STARTED) {
+            if (newStatus == AttemptStatus.SUBMITTED || newStatus == AttemptStatus.ABANDONED) {
+                allowed = true;
+            }
+        } else if (current == AttemptStatus.SUBMITTED) {
+            if (newStatus == AttemptStatus.GRADED || newStatus == AttemptStatus.ABANDONED) {
+                allowed = true;
+            }
+        }
+
+        if (!allowed) {
+            return "Cannot change status from " + current + " to " + newStatus;
+        }
+
+        existing.setStatus(newStatus);
+        quizAttemptRepository.save(existing);
+        return "Quiz attempt status updated successfully";
     }
 
     public String deleteQuizAttempt(UUID id) {

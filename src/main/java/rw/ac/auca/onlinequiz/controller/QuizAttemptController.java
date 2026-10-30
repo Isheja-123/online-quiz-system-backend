@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +35,10 @@ public class QuizAttemptController {
         String message = quizAttemptService.saveQuizAttempt(quizAttempt);
         if (message.equalsIgnoreCase("Quiz attempt saved successfully")) {
             return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else if (message.equalsIgnoreCase("Quiz attempt date cannot be in the past")) {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        } else if (message.equalsIgnoreCase("Instructor already has a quiz attempt on that date")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
@@ -82,5 +87,16 @@ public class QuizAttemptController {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
         return new ResponseEntity<>(quizAttemptService.findBetweenDates(startDate, endDate), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<?> updateQuizAttemptStatus(@PathVariable UUID id, @RequestParam AttemptStatus status) {
+        String message = quizAttemptService.updateStatus(id, status);
+        if (message.equalsIgnoreCase("Quiz attempt status updated successfully")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equalsIgnoreCase("The quiz attempt with that id does not exist")) {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
