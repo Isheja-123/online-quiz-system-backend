@@ -71,6 +71,8 @@ public class QuizAttemptController {
         String message = quizAttemptService.deleteQuizAttempt(id);
         if (message.equalsIgnoreCase("Quiz attempt deleted successfully")) {
             return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equalsIgnoreCase("That quiz attempt has feedback notes, delete them first")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }

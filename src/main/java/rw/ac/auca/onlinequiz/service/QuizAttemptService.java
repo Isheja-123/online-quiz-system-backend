@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rw.ac.auca.onlinequiz.domain.AttemptStatus;
 import rw.ac.auca.onlinequiz.domain.QuizAttempt;
+import rw.ac.auca.onlinequiz.repository.FeedbackNoteRepository;
 import rw.ac.auca.onlinequiz.repository.QuizAttemptRepository;
 
 import java.time.LocalDate;
@@ -16,6 +17,9 @@ public class QuizAttemptService {
 
     @Autowired
     private QuizAttemptRepository quizAttemptRepository;
+
+    @Autowired
+    private FeedbackNoteRepository feedbackNoteRepository;
 
     public String saveQuizAttempt(QuizAttempt quizAttempt) {
         if (quizAttempt.getAttemptDate() != null && quizAttempt.getAttemptDate().isBefore(LocalDate.now())) {
@@ -95,6 +99,10 @@ public class QuizAttemptService {
         Optional<QuizAttempt> existingOptional = quizAttemptRepository.findById(id);
         if (existingOptional.isEmpty()) {
             return "The quiz attempt with that id does not exist";
+        }
+        QuizAttempt existing = existingOptional.get();
+        if (feedbackNoteRepository.existsByQuizAttempt(existing)) {
+            return "That quiz attempt has feedback notes, delete them first";
         }
         quizAttemptRepository.deleteById(id);
         return "Quiz attempt deleted successfully";
