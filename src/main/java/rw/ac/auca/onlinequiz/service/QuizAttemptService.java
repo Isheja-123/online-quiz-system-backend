@@ -2,10 +2,14 @@ package rw.ac.auca.onlinequiz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rw.ac.auca.onlinequiz.domain.AttemptStatus;
 import rw.ac.auca.onlinequiz.domain.QuizAttempt;
 import rw.ac.auca.onlinequiz.repository.FeedbackNoteRepository;
 import rw.ac.auca.onlinequiz.repository.QuizAttemptRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -114,5 +118,19 @@ public class QuizAttemptService {
 
     public List<QuizAttempt> findBetweenDates(LocalDate start, LocalDate end) {
         return quizAttemptRepository.findByAttemptDateBetweenOrderByAttemptDateAsc(start, end);
+    }
+
+    public List<Object[]> getStatsByStatus() {
+        return quizAttemptRepository.countQuizAttemptsByStatus();
+    }
+
+    @Transactional
+    public String cancelDay(UUID instructorId, LocalDate date) {
+        int cancelledCount = quizAttemptRepository.cancelDayForInstructor(instructorId, date);
+        return cancelledCount + " quiz attempts cancelled";
+    }
+
+    public Page<QuizAttempt> findPage(Pageable pageable) {
+        return quizAttemptRepository.findAll(pageable);
     }
 }

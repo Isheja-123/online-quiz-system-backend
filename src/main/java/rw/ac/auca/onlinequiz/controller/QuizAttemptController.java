@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import rw.ac.auca.onlinequiz.domain.AttemptStatus;
 import rw.ac.auca.onlinequiz.domain.QuizAttempt;
 import rw.ac.auca.onlinequiz.service.QuizAttemptService;
@@ -100,5 +104,32 @@ public class QuizAttemptController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<List<Object[]>> getStatsByStatus() {
+        return new ResponseEntity<>(quizAttemptService.getStatsByStatus(), HttpStatus.OK);
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDay(
+            @RequestParam UUID instructorId,
+            @RequestParam String date) {
+        LocalDate attemptDate = LocalDate.parse(date);
+        String message = quizAttemptService.cancelDay(instructorId, attemptDate);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<QuizAttempt>> getQuizAttemptsPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "attemptDate,desc") String sort) {
+        String[] sortParts = sort.split(",");
+        String property = sortParts[0];
+        Sort.Direction direction = (sortParts.length > 1 && sortParts[1].equalsIgnoreCase("desc"))
+                ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, property));
+        return new ResponseEntity<>(quizAttemptService.findPage(pageable), HttpStatus.OK);
     }
 }
